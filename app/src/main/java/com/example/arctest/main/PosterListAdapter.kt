@@ -36,6 +36,14 @@ class PosterListAdapter(val activity: FragmentActivity, val posterList: List<Pos
             holder.title.text = poster.frontmatter.title
         }
 
+        val subTitle = poster.frontmatter.date
+        if (subTitle.isNullOrEmpty()){
+            holder.subTitle.visibility = View.GONE
+        }else{
+            holder.subTitle.visibility = View.VISIBLE
+            holder.subTitle.text = subTitle
+        }
+
         holder.itemView.setOnClickListener {
             if (poster.frontmatter.path.isNullOrEmpty()){
                 Toast.makeText(activity, "path is invalid", Toast.LENGTH_SHORT).show()
@@ -53,5 +61,6 @@ class PosterListAdapter(val activity: FragmentActivity, val posterList: List<Pos
     class PosterViewHolder(itemView: View): ViewHolder(itemView) {
         val poster: ImageView by lazy { itemView.findViewById(R.id.poster) }
         val title: TextView by lazy { itemView.findViewById(R.id.title) }
+        val subTitle: TextView by lazy { itemView.findViewById(R.id.sub_title) }
     }
 }
