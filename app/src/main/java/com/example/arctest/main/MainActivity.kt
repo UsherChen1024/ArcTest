@@ -14,6 +14,7 @@ import com.example.arctest.R
 import com.example.arctest.common.isOnline
 import com.example.arctest.databinding.ActivityMainBinding
 import com.example.arctest.model.Poster
+import kotlinx.coroutines.delay
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -32,11 +33,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fetchData() {
-        if (isOnline(this)) {
-            mainViewModel.fetchPosters()
-        }else{
+        if (!isOnline(this)) {
             Toast.makeText(this, "网络连接不可用", Toast.LENGTH_SHORT).show()
         }
+        mainViewModel.fetchPosters()
     }
 
     private fun observeData() {
