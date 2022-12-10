@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.arctest.R
+import com.example.arctest.common.isOnline
 import com.example.arctest.databinding.ActivityMainBinding
 import com.example.arctest.model.Poster
 
@@ -31,11 +32,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fetchData() {
-        mainViewModel.fetchPosters()
+        if (isOnline(this)) {
+            mainViewModel.fetchPosters()
+        }else{
+            Toast.makeText(this, "网络连接不可用", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun observeData() {
         mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
+
         mainViewModel.posterLiveData.observe(this) {
             posterList.clear()
             posterList.addAll(it)
