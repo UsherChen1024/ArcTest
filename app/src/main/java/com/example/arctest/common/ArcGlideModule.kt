@@ -6,6 +6,7 @@ import com.bumptech.glide.GlideBuilder
 import com.bumptech.glide.Registry
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.load.DecodeFormat
+import com.bumptech.glide.load.engine.cache.LruResourceCache
 import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.RequestOptions
 
@@ -23,5 +24,8 @@ class ArcGlideModule : AppGlideModule() {
                 .format(DecodeFormat.PREFER_RGB_565)
                 .disallowHardwareConfig()
         )
+        val maxMemory = Runtime.getRuntime().maxMemory().toInt()
+        val memoryCacheSize = maxMemory / 8
+        builder.setMemoryCache(LruResourceCache(memoryCacheSize.toLong()))
     }
 }
