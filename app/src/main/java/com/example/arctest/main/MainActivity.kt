@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,6 +41,10 @@ class MainActivity : AppCompatActivity() {
             posterList.addAll(it)
             adapter.notifyDataSetChanged()
         }
+
+        mainViewModel.toastEvent.observe(this){
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun initRecyclerView() {
@@ -47,9 +52,5 @@ class MainActivity : AppCompatActivity() {
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapter = PosterListAdapter(this, posterList)
         binding.recyclerView.adapter = adapter
-    }
-
-    companion object {
-        private const val TAG = "MainActivity"
     }
 }
